@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quiz Exam</title>
+    <style media="screen">
+      .topsec{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        width:100%;
+      }
+      #timer{
+        transform: translateY(50%)translateX(20%);
+        font-size:30px;
+
+      }
+      body{
+        background:linear-gradient(90deg,#2B3499,#39A7FF,#87C4FF)
+      }
+      .container{
+        position:relative;
+        width:95%;
+        height:auto;
+        background-color:white;
+        padding:30px;
+        box-shadow:2px 5px 5px;
+        border-radius:20px;
+      }
+      ul{
+        list-style:none;
+      }
+      .subnex{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:900px;;
+      }
+      .btn{
+      height:50px;
+      width:120px;
+      border-radius:5px;
+      }
+      h1{
+        font-size:40px;
+        color:white;
+      }h2{
+        font-size:40px;
+      }
+      li{
+        font-size:30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topsec">
+      <h1>Section2:Ganeral Knowledge Questions</h1>
+      <div id="timer">Time remaining:15 minutes</div>
+    </div>
+    <div class="container">
+      <div class="quizcont">
+        <div class="quiz">
+          <h2 class="ques" id="question">question1:</h2>
+            <ul>
+              <li>
+                <input type="radio" name="answer" id="option1">
+                <label for="option1" id="a">Option 1</label>
+              </li>
+              <li>
+                <input type="radio" name="answer" id="option2">
+                <label for="option2" id="b">Option 2</label>
+              </li>
+              <li>
+                <input type="radio" name="answer" id="option3">
+                <label for="option3" id="c">Option 3</label>
+              </li>
+              <li>
+                <input type="radio" name="answer" id="option4">
+                <label for="option4" id="d">Option 4</label>
+              </li>
+            </ul>
+          <div class="subnex">
+            <button type="button" class="btn" onclick="validate()"id="btn"name="button">Next</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <script type="text/javascript">
+    var targetTime = new Date();
+    targetTime.setMinutes(targetTime.getMinutes() + 15);
+    var timerElement = document.getElementById('timer');
+    var timerInterval = setInterval(function() {
+    var currentTime = new Date();
+    var remainingTime = targetTime - currentTime;
+    if (remainingTime <= 0) {
+      clearInterval(timerInterval);
+      timerElement.innerHTML = 'Timer Expired!';
+      window.location.href="quiz_pg2.html";
+    } else {
+      var minutes = Math.floor((remainingTime / 1000) / 60);
+      var seconds = Math.floor((remainingTime / 1000) % 60);
+      timerElement.innerHTML = 'Time remaining: ' + minutes + ' minutes and ' + seconds + ' seconds';
+    }
+    }, 1000);
+    var QA = [
+  {
+    question: "1.Which planet is known as the 'Red Planet'?",
+    a: "Venus",
+    b: "Mars",
+    c: "Jupiter",
+    d: "Saturn",
+    correctAnswer: "option2"
+  },
+  {
+    question: "2.Who was the first President of the United States?",
+    a: "Thomas Jefferson",
+    b: "George Washington",
+    c: "Abraham Lincoln",
+    d: "John Adams",
+    correctAnswer: "option2"
+  },
+  {
+    question: "3.What is the chemical symbol for gold?",
+    a: "Ag",
+    b: "Au",
+    c: "Fe",
+    d: "Pb",
+    correctAnswer: "option2"
+  },
+  {
+    question: "4.What is the largest mammal in the world?",
+    a: "Elephant",
+    b: "Blue Whale",
+    c: "Giraffe",
+    d: "Lion",
+    correctAnswer: "option2"
+  },
+  {
+    question: "5.Which country is known as the 'Land of the Rising Sun'?",
+    a: "China",
+    b: "Japan",
+    c: "South Korea",
+    d: "Vietnam",
+    correctAnswer: "option2"
+  }
+];
+
+var index=0;
+var marks=0;
+const question=document.querySelector('.ques');
+const option1=document.querySelector('#a');
+const option2=document.querySelector('#b');
+const option3=document.querySelector('#c');
+const option4=document.querySelector('#d');
+const ans1=document.querySelector('#option1');
+const ans2=document.querySelector('#option2');
+const ans3=document.querySelector('#option3');
+const ans4=document.querySelector('#option4');
+function loadQuestion(){
+  question.innerText = QA[index].question;
+  option1.innerText = QA[index].a;
+  option2.innerText = QA[index].b;
+  option3.innerText = QA[index].c;
+  option4.innerText = QA[index].d;
+}
+loadQuestion();
+function validate(){
+  const op = QA[index].correctAnswer;
+  const ans = document.getElementById(op);
+  if(ans.checked){
+    marks = marks + 2;
+  }
+  if(index !== 4) {
+  index++;
+  ans1.checked = false;
+  ans2.checked = false;
+  ans3.checked = false;
+  ans4.checked = false;
+  loadQuestion();
+} else {
+  window.location.href="quiz_pg3.html";
+  localStorage.setItem('S2', marks);
+}
+}
+
+
+    </script>
+  </body>
+</html>

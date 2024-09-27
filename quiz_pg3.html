@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quiz Exam</title>
+    <style media="screen">
+      .topsec{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        width:100%;
+      }
+      #timer{
+        transform: translateY(50%) translateX(20%);
+        font-size:30px;
+      }
+      body{
+        background:linear-gradient(90deg,#2B3499,#39A7FF,#87C4FF);
+      }
+      .container{
+        position:relative;
+        width:95%;
+        height:auto;
+        background-color:white;
+        padding:30px;
+        box-shadow:2px 5px 5px;
+        border-radius:20px;
+      }
+      ul{
+        list-style:none;
+      }
+      .subnex{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:10px;
+      }
+      .btn{
+        height:50px;
+        width:120px;
+        border-radius:5px;
+      }
+      h1{
+        font-size:40px;
+        color:white;
+      }
+      h2{
+        font-size:40px;
+      }
+      li{
+        font-size:30px;
+      }
+      #logo {
+        width: 300px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topsec">
+      <h1>Section3: Logo Identification Questions</h1>
+      <div id="timer">Time remaining: 8 minutes</div>
+    </div>
+    <div class="container">
+      <div class="quizcont">
+        <div class="quiz">
+          <h2 class="ques" id="question"></h2>
+          <img id="logo" src="" />
+          <ul>
+            <li>
+              <input type="radio" name="answer" id="option1">
+              <label for="option1" id="a">Option 1</label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="option2">
+              <label for="option2" id="b">Option 2</label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="option3">
+              <label for="option3" id="c">Option 3</label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="option4">
+              <label for="option4" id="d">Option 4</label>
+            </li>
+          </ul>
+          <div class="subnex">
+            <button type="button" class="btn" onclick="validate()" id="btn" name="button">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+    var targetTime = new Date();
+    targetTime.setMinutes(targetTime.getMinutes() + 8);
+    var timerElement = document.getElementById('timer');
+    var timerInterval = setInterval(function() {
+    var currentTime = new Date();
+    var remainingTime = targetTime - currentTime;
+    if (remainingTime <= 0) {
+      clearInterval(timerInterval);
+      timerElement.innerHTML = 'Timer Expired!';
+      window.location.href = "quiz_pg2.html";
+    } else {
+      var minutes = Math.floor((remainingTime / 1000) / 60);
+      var seconds = Math.floor((remainingTime / 1000) % 60);
+      timerElement.innerHTML = 'Time remaining: ' + minutes + ' minutes and ' + seconds + ' seconds';
+    }
+    }, 1000);
+
+    var logoQA = [
+      {
+        question: "1. Identify the given Logo",
+        image: "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19673.png",
+        a: "Microsoft",
+        b: "Google",
+        c: "Apple",
+        d: "Samsung",
+        correctAnswer: "option3"
+      },
+      {
+        question: "2. Identify the given Logo",
+        image: "http://pluspng.com/img-png/twitter-logo-png-logo-twitter-in-png-2500.png",
+        a: "Twitter",
+        b: "Facebook",
+        c: "Instagram",
+        d: "Snapchat",
+        correctAnswer: "option1"
+      },
+      {
+        question: "3. Identify the given Logo",
+        image: "http://logos-download.com/wp-content/uploads/2016/05/Olympic_Rings_logo_with_rims.png",
+        a: "Adidas",
+        b: "Puma",
+        c: "Nike",
+        d: "Olympics",
+        correctAnswer: "option4"
+      },
+      {
+        question: "4. Identify the given Logo",
+        image: "https://purepng.com/public/uploads/large/purepng.com-nike-logologobrand-logoiconslogos-251519940082eoxxs.png",
+        a: "Reebok",
+        b: "Under Armour",
+        c: "Nike",
+        d: "Puma",
+        correctAnswer: "option3"
+      },
+      {
+        question: "5. Identify the given Logo",
+        image: "http://pngimg.com/uploads/google/google_PNG19635.png",
+        a: "Google",
+        b: "Yahoo",
+        c: "Bing",
+        d: "DuckDuckGo",
+        correctAnswer: "option1"
+      }
+    ];
+
+    var index = 0;
+    var marks = 0;
+    const question = document.querySelector('.ques');
+    const image = document.querySelector('#logo');
+    const option1 = document.querySelector('#a');
+    const option2 = document.querySelector('#b');
+    const option3 = document.querySelector('#c');
+    const option4 = document.querySelector('#d');
+    const ans1 = document.querySelector('#option1');
+    const ans2 = document.querySelector('#option2');
+    const ans3 = document.querySelector('#option3');
+    const ans4 = document.querySelector('#option4');
+
+    function loadQuestion() {
+      question.innerText = logoQA[index].question;
+      image.src = logoQA[index].image;
+      option1.innerText = logoQA[index].a;
+      option2.innerText = logoQA[index].b;
+      option3.innerText = logoQA[index].c;
+      option4.innerText = logoQA[index].d;
+    }
+
+    loadQuestion();
+
+    function validate() {
+      const op = logoQA[index].correctAnswer;
+      const ans = document.getElementById(op);
+      if (ans.checked) {
+        marks = marks + 4;
+      }
+      if (index !== 4) {
+        index++;
+        ans1.checked = false;
+        ans2.checked = false;
+        ans3.checked = false;
+        ans4.checked = false;
+        loadQuestion();
+      } else {
+        window.location.href = "submit.html";
+        localStorage.setItem('S3', marks);
+      }
+    }
+    </script>
+  </body>
+</html>
